@@ -12,19 +12,20 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: black;
+            background: black; /* Solid black background for better contrast */
             color: white;
             overflow-x: hidden;
             scroll-behavior: smooth;
             position: relative;
         }
 
+        /* Background Numbers */
         .number {
             position: absolute;
             font-size: 30px;
             color: rgba(0, 255, 150, 0.7);
             white-space: nowrap;
-            pointer-events: none;
+            pointer-events: none; /* Prevent interaction */
             animation: fall linear infinite;
         }
 
@@ -33,6 +34,7 @@
             100% { transform: translateY(100vh); }
         }
 
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: center;
@@ -57,11 +59,12 @@
             color: #00ffcc;
         }
 
+        /* Hero Section */
         .hero {
             text-align: center;
             padding: 120px 20px 50px;
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Ensure it appears above the background elements */
         }
 
         .hero img {
@@ -76,6 +79,7 @@
             transform: scale(1.1);
         }
 
+        /* Sections */
         .section {
             max-width: 800px;
             margin: 50px auto;
@@ -84,6 +88,7 @@
             border-radius: 10px;
             text-align: center;
             position: relative;
+            z-index: 1; /* Ensure it appears above the background elements */
         }
 
         .section:hover {
@@ -92,6 +97,7 @@
             border: 2px solid #00ffcc;
         }
 
+        /* Buttons */
         .btn {
             display: inline-block;
             margin: 10px;
@@ -108,35 +114,22 @@
             box-shadow: 0 0 15px #00ffcc;
         }
 
-        #canvas-container, #ds-model {
+        /* 3D Model Canvas */
+        #canvas-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
             height: 300px;
-            z-index: 1;
+            z-index: 1; /* Ensure it appears above the background elements */
         }
 
-        @media (max-width: 768px) {
-            .hero img {
-                width: 100px;
-                height: 100px;
-            }
-
-            #canvas-container, #ds-model {
-                width: 200px;
-                height: 200px;
-            }
-
-            .section {
-                padding: 15px;
-            }
-        }
     </style>
 </head>
 <body>
     <script>
+        // Create binary rain effect
         function createBinaryRain() {
             const columns = Math.floor(window.innerWidth / 20);
             const numbers = [];
@@ -160,28 +153,28 @@
         createBinaryRain();
     </script>
 
-    <div id="ds-model"></div>
+    <div id="canvas-container"></div>
     <script>
-        const dsScene = new THREE.Scene();
-        const dsCamera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
-        const dsRenderer = new THREE.WebGLRenderer({ alpha: true });
-        dsRenderer.setSize(300, 300);
-        document.getElementById("ds-model").appendChild(dsRenderer.domElement);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(300, 300);
+        document.getElementById("canvas-container").appendChild(renderer.domElement);
 
-        const dsGeometry = new THREE.SphereGeometry();
-        const dsMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00, wireframe: true });
-        const dsSphere = new THREE.Mesh(dsGeometry, dsMaterial);
-        dsScene.add(dsSphere);
+        const geometry = new THREE.SphereGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0xffcc00, wireframe: true });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
 
-        dsCamera.position.z = 3;
+        camera.position.z = 3;
 
-        function animateDS() {
-            requestAnimationFrame(animateDS);
-            dsSphere.rotation.x += 0.01;
-            dsSphere.rotation.y += 0.01;
-            dsRenderer.render(dsScene, dsCamera);
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+            renderer.render(scene, camera);
         }
-        animateDS();
+        animate();
     </script>
 
     <!-- Navbar -->
