@@ -83,7 +83,6 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             text-align: center;
-            transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
             position: relative;
         }
 
@@ -91,6 +90,22 @@
             transform: scale(1.05);
             box-shadow: 0px 0px 15px rgba(0, 255, 150, 0.8);
             border: 2px solid #00ffcc;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #00ffcc, #007bff);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00ffcc;
         }
 
         #canvas-container, #ds-model {
@@ -117,21 +132,6 @@
             .section {
                 padding: 15px;
             }
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #00ffcc;
-            color: black;
-            padding: 12px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #009999;
         }
     </style>
 </head>
@@ -195,15 +195,12 @@
 
     <!-- Hero Section -->
     <div class="hero">
-        <img src="profile.jpg" alt="Nahshon J's Picture" onerror="this.src='https://via.placeholder.com/130'">
+        <img src="https://github.com/nahshon-j/portfolio/blob/main/portfolio/profile.jpg" alt="Nahshon J's Picture" onerror="this.src='https://via.placeholder.com/130'">
         <h1>Nahshon J</h1>
         <p>Aspiring Data Scientist</p>
         <a class="btn" href="https://www.linkedin.com/in/nahshon-j-1b7998294" target="_blank">LinkedIn</a>
         <a class="btn" href="https://github.com/nahshon-j" target="_blank">GitHub</a>
         <a class="btn" href="https://github.com/nahshon-j/portfolio/raw/main/portfolio/resume.pdf" download>Download Resume</a>
-
-
- <!-- Changed to GitHub Resume link -->
     </div>
 
     <!-- About Section -->
@@ -245,6 +242,5 @@
         <p>Email: nahshonj126@gmail.com</p>
         <p>Location: Chennai</p>
     </div>
-
 </body>
 </html>
