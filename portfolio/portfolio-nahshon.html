@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nahshon J - Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        .number {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(0, 255, 150, 0.7);
+            white-space: nowrap;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #00ffcc;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero img {
+            border-radius: 50%;
+            width: 130px;
+            height: 130px;
+            border: 3px solid #00ffcc;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hero img:hover {
+            transform: scale(1.1);
+        }
+
+        .section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .section:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(0, 255, 150, 0.8);
+            border: 2px solid #00ffcc;
+        }
+
+        #canvas-container, #ds-model {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero img {
+                width: 100px;
+                height: 100px;
+            }
+
+            #canvas-container, #ds-model {
+                width: 200px;
+                height: 200px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #00ffcc;
+            color: black;
+            padding: 12px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #009999;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function createBinaryRain() {
+            const columns = Math.floor(window.innerWidth / 20);
+            const numbers = [];
+            for (let i = 0; i < columns; i++) {
+                const number = document.createElement('div');
+                number.className = 'number';
+                number.innerText = Math.floor(Math.random() * 2);
+                number.style.left = (i * 20) + 'px';
+                number.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.body.appendChild(number);
+                numbers.push(number);
+            }
+
+            setInterval(() => {
+                numbers.forEach(num => {
+                    num.innerText = Math.floor(Math.random() * 2);
+                });
+            }, 500);
+        }
+
+        createBinaryRain();
+    </script>
+
+    <div id="ds-model"></div>
+    <script>
+        const dsScene = new THREE.Scene();
+        const dsCamera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
+        const dsRenderer = new THREE.WebGLRenderer({ alpha: true });
+        dsRenderer.setSize(300, 300);
+        document.getElementById("ds-model").appendChild(dsRenderer.domElement);
+
+        const dsGeometry = new THREE.SphereGeometry();
+        const dsMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00, wireframe: true });
+        const dsSphere = new THREE.Mesh(dsGeometry, dsMaterial);
+        dsScene.add(dsSphere);
+
+        dsCamera.position.z = 3;
+
+        function animateDS() {
+            requestAnimationFrame(animateDS);
+            dsSphere.rotation.x += 0.01;
+            dsSphere.rotation.y += 0.01;
+            dsRenderer.render(dsScene, dsCamera);
+        }
+        animateDS();
+    </script>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <img src="profile.jpg" alt="Nahshon J's Picture" onerror="this.src='https://via.placeholder.com/130'">
+        <h1>Nahshon J</h1>
+        <p>Aspiring Data Scientist</p>
+        <a class="btn" href="https://www.linkedin.com/in/nahshon-j-1b7998294" target="_blank">LinkedIn</a>
+        <a class="btn" href="https://github.com/nahshon-j" target="_blank">GitHub</a>
+        <a class="btn" href="resume.pdf" target="_blank">Download Resume</a> <!-- Changed to PDF -->
+    </div>
+
+    <!-- About Section -->
+    <div class="section" id="about">
+        <h2>About Me</h2>
+        <p>I am currently pursuing a Bachelor of Computer Applications (BCA) at Alpha Arts and Science College, Chennai. I have a strong interest in Data Science, and I am passionate about leveraging data to drive insights and make informed decisions. I am constantly learning and seeking to improve my skills in various fields of technology, including Machine Learning, Python, and Data Analytics.</p>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="section" id="projects">
+        <h2>Projects</h2>
+        <p><strong>Road Sign Detection</strong> - AI & ML project using Python and Power BI to classify road signs for enhanced road safety.</p>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="section" id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>Python</li>
+            <li>Machine Learning</li>
+            <li>Data Science</li>
+            <li>Power BI</li>
+            <li>Social Media Marketing</li>
+        </ul>
+    </div>
+
+    <!-- Certifications Section -->
+    <div class="section" id="certifications">
+        <h2>Certifications</h2>
+        <ul>
+            <li>Introduction to Data Science - Infosys Springboard</li>
+            <li>Cloud & Front-End Web Development - IBM SkillsBuild</li>
+        </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="section" id="contact">
+        <h2>Contact</h2>
+        <p>Email: nahshonj126@gmail.com</p>
+        <p>Location: Chennai</p>
+    </div>
+
+</body>
+</html>
